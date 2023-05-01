@@ -1,38 +1,62 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
-
-## Getting Started
-
-First, run the development server:
-
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-```
-
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
-
-You can start editing the page by modifying `pages/index.js`. The page auto-updates as you edit the file.
-
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.js`.
-
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
-
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+1. 	to extract value from pathVariable 
+	-  use to import useRouter from 'next/router'
+	    Example : import { useRouter } from 'next/router'
+	-  and you want to extract value from that field 
+		const router = useRouter();
+		const val=router.query.id; // extract value id 
+	-	to extract value from a lot of path variable
+		in your file must use : [...slug].js
+		then when router.query all that path variable become an array 
+		Example : that in folder blog
+		http://localhost:3000/blog/12-2323/21/23/23324/23432r
+		when you console.log(router.query) you will get object an array 
+		{
+			"slug": [
+				"12-2323",
+				"21",
+				"23",
+				"23324",
+				"23432r"
+			]
+		}
+2. 	to router from one to page to another page 
+	-	use must import Link 
+		import Link from 'next/link';
+	- 	link use to navigate from one to another page without reload the page
+		Example :  <Link href='/' >Home</Link>
+	-	dynamic routing you create an array object that have id and name 
+		Example : 
+				const clients=[
+					{id:"001",name:"chento"},
+					{id:"002",name:"sokheng"}
+				];
+			then you loop it : 
+				{clients.map((item,index)=>(
+					<li key={index}>
+						<Link href={{
+							pathname:`/clients/[id]`,
+							query:{id: item.id}
+						}}>{item.name}</Link>
+					</li>
+				))}
+	- 	to navigate from one page to another page instead of using Link can use 'push'
+		Example : you the user click on a button you want to navigate to another page 
+				,so we use with router
+		==============================
+		import {Router} from 'next/router';
+		const router= Router();
+		const handleClick(){
+			router.push('/home')
+		}
+		or
+		const handleClick(){
+			router.push({
+				pathname:'client/[id]/[clientIdDetail]'
+				query:{id:"001",clientIdDetail:"product-001"}
+			})
+		}
+		* it mean when call that function and the user click it will naviage to that page
+		===============================
+3. customer error page
+	-	just define a file name 404.js then custom it , it not only 404.js it depen on what your error 
+4.	boilerplate code : refer to section of code that repeat in multiple places 
